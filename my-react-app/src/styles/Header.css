@@ -1,0 +1,38 @@
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem 0;
+  height: 120px;
+}
+
+.nav-left {
+  margin-left: 2rem;
+}
+.nav-right {
+  margin-right: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+ul {
+  display: flex;
+  gap: 20px;
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+
+li {
+    color: #9a263d;
+    font-size: 22px;
+}
+
+li:hover {
+    transition: all 0.3s ease-in;
+    color: #242424;
+}

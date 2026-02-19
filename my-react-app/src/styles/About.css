@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1rem  0  1rem .5rem;
+  width: 100%;
+  background-color: #fddcc8;
+  margin-top: -4px;
+}
+
+.about-left {
+  width: 45%;
+}
+
+.about-left .about-title h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #9a263d;
+}
+.about-left .about-description p {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: #9a263d;
+}
+
+.about-right {
+  width: 55%;
+}
+
+.about-right img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
