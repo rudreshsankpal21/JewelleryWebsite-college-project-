@@ -1,0 +1,35 @@
+.product-container {
+  background-color: #f2f1ef;
+  width: 100%;
+  margin-top: 100px;
+}
+.product-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.product-header img {
+  height: 120px;
+  width: 20%;
+  object-fit: contain;
+}
+
+.product-img-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.product-img-container img {
+  height: 420px;
+  width: 380px;
+  margin-top: 40px;
+}
+.product-img-container h3 {
+  text-align: center;
+  margin-top: 30px;
+  color: #9a263d;
+}
