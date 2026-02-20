@@ -1,25 +1,28 @@
-import AboutUs from '../Components/AboutUs'
-import Header from '../Components/Header'
-import HeroSection from '../Components/HeroSection'
-import Products from '../Components/Products'
+import AboutUs from "../Components/AboutUs";
+import Collection from "../Components/Collection";
+import Header from "../Components/Header";
+import HeroSection from "../Components/HeroSection";
+import Products from "../Components/Products";
 
 const HomePage = () => {
   return (
     <div>
-       
-       {/* Header */}
-       <Header />
+      {/* Header */}
+      <Header />
 
-       {/* Hero Section */}
-       <HeroSection />
+      {/* Hero Section */}
+      <HeroSection />
 
-       {/* About Us */}
-       <AboutUs />
+      {/* About Us */}
+      <AboutUs />
 
-       {/* Products */}
-       <Products />
+      {/* Products */}
+      <Products />
+
+      {/* Collections */}
+      <Collection />
     </div>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
