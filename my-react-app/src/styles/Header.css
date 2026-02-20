@@ -1,24 +1,29 @@
 nav {
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   padding: 1rem 0;
   height: 120px;
+  background-color: #fff  ;
 }
 
 .nav-left {
   margin-left: 2rem;
 }
 .nav-right {
-  margin-right: 2.5rem;
+  margin-right: 5rem;
   display: flex;
   justify-content: center;
   align-items: center;
+
 }
 ul {
   display: flex;
-  gap: 20px;
+  gap: 40px;
   list-style-type: none;
 }
 
@@ -29,7 +34,7 @@ a {
 
 li {
     color: #9a263d;
-    font-size: 22px;
+    font-size: 18px;
 }
 
 li:hover {
