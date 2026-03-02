@@ -7,7 +7,7 @@ const Header = () => {
       <nav>
         {/* logo goes here */}
         <div className="nav-left">
-          {/* <img src="" alt="Logo " /> */}
+          <img src="../src/assets/logo.png" alt="Logo " height={'100px'} width={'200px'}/>
         </div>
         <div className="nav-right">
           <ul>
