@@ -8,7 +8,7 @@ nav {
   width: 100%;
   padding: 1rem 0;
   height: 120px;
-  background-color: #fff  ;
+  background-color: #f0ede1;
 }
 
 .nav-left {
@@ -19,7 +19,6 @@ nav {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 ul {
   display: flex;
@@ -31,13 +30,12 @@ a {
   text-decoration: none;
 }
 
-
 li {
-    color: #9a263d;
-    font-size: 18px;
+  color: #9a263d;
+  font-size: 18px;
 }
 
 li:hover {
-    transition: all 0.3s ease-in;
-    color: #242424;
+  transition: all 0.3s ease-in;
+  color: #242424;
 }
