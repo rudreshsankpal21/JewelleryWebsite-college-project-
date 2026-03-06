@@ -1,0 +1,116 @@
+/* ── Global Custom Cursor ── */
+
+/* Hide the real cursor site-wide */
+* {
+  cursor: none !important;
+}
+
+.cursor-ball {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+
+  /* Default state: outlined dark circle */
+  background-color: #ffffff73;
+  border: 3px solid #00000096;
+
+  /* Centered on pointer via translate */
+  transform: translate(-50%, -50%);
+
+  /* Smooth scale / color transitions */
+  transition:
+    width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    height 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background 0.25s ease,
+    border-color 0.25s ease,
+    opacity 0.3s ease;
+
+
+}
+
+.cursor-ball.ready {
+  opacity: 1;
+}
+
+/* On text hover — filled accent */
+.cursor-ball.on-text {
+  width: 20px;
+  height: 20px;
+  background: #9a263d;
+  border-color: #9a263d;
+}
+
+/* On clickable/link hover — larger ring */
+.cursor-ball.on-link {
+  width: 54px;
+  height: 54px;
+  background: rgba(154, 38, 61, 0.12);
+  border-color: rgba(154, 38, 61, 0.7);
+}
+
+/* On image / product hover — filled dark */
+.cursor-ball.on-image {
+  width: 68px;
+  height: 68px;
+  background: rgba(26, 26, 26, 0.1);
+  border-color: #1a1a1a;
+}
+
+/* Cursor label inside (used by Products) */
+.cursor-ball .cursor-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: white;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  mix-blend-mode: normal;
+}
+
+.cursor-ball.on-image .cursor-label {
+  opacity: 2;
+}
+
+/* ── Inverted cursor (dark background sections) ── */
+.cursor-ball.inverted {
+  background-color: rgba(255, 255, 255, 0.75);
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+.cursor-ball.inverted.on-text {
+  background: #ffffff;
+  border-color: #ffffff;
+}
+
+.cursor-ball.inverted.on-link {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+.cursor-ball.inverted.on-image {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.75);
+}
+
+/* Hide on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .cursor-ball {
+    display: none !important;
+  }
+  * {
+    cursor: auto !important;
+  }
+}

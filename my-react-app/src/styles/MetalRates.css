@@ -1,0 +1,446 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Josefin+Sans:wght@300;400;600&display=swap");
+
+/* ── Page Shell ──────────────────────────────────────────────────────── */
+.mr-page {
+  position: relative;
+  min-height: 100vh;
+  background: #060402;
+  overflow-x: hidden;
+}
+
+/* ── Three.js canvas wrapper ─────────────────────────────────────────── */
+.three-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+.three-bg canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ── Dark gradient overlay ───────────────────────────────────────────── */
+.mr-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 80% 70% at 50% 40%,
+      rgba(6, 4, 2, 0.55) 0%,
+      rgba(4, 2, 0, 0.82) 65%,
+      rgba(3, 1, 0, 0.95) 100%
+    );
+}
+
+/* ── Page Content ────────────────────────────────────────────────────── */
+.mr-content {
+  position: relative;
+  z-index: 10;
+  padding-top: 90px; /* nav height */
+  max-width: 1240px;
+  margin: 0 auto;
+  padding-left: 48px;
+  padding-right: 48px;
+  padding-bottom: 100px;
+}
+
+/* ── Hero Section ────────────────────────────────────────────────────── */
+.mr-hero {
+  text-align: center;
+  padding: 80px 0 64px;
+}
+
+/* Ornament row */
+.mr-hero-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.mr-ornament-line {
+  display: block;
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.5));
+}
+
+.mr-ornament-line:first-child {
+  background: linear-gradient(to left, transparent, rgba(212, 175, 55, 0.5));
+}
+
+.mr-ornament-diamond {
+  color: #d4af37;
+  font-size: 10px;
+  opacity: 0.8;
+}
+
+.mr-caption {
+  display: block;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 10px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: rgba(212, 175, 55, 0.75);
+  margin-bottom: 20px;
+}
+
+.mr-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(56px, 9vw, 108px);
+  font-weight: 300;
+  color: #fff;
+  line-height: 1;
+  letter-spacing: -1px;
+  margin: 0 0 24px;
+}
+
+.mr-updated {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.32);
+  margin: 0;
+}
+
+/* ── Sections ────────────────────────────────────────────────────────── */
+.mr-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+}
+
+/* Section header */
+.mr-section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.mr-section-indicator {
+  width: 3px;
+  height: 28px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.mr-section-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 32px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.mr-section-line {
+  flex: 1;
+  height: 1px;
+  opacity: 0.35;
+}
+
+.mr-section-count {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.25);
+  white-space: nowrap;
+}
+
+/* ── Cards Grid ──────────────────────────────────────────────────────── */
+.mr-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 20px;
+}
+
+/* ── Metal Card ──────────────────────────────────────────────────────── */
+.mr-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 2px;
+  padding: 28px 24px 22px;
+  overflow: hidden;
+  cursor: default;
+  transition:
+    background 0.4s ease,
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.4s ease;
+  /* opacity 0 set inline — GSAP handles reveal */
+}
+
+/* Top accent gradient line */
+.mr-card-topline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--card-accent) 40%,
+    var(--card-accent-light) 60%,
+    transparent 100%
+  );
+  opacity: 0.7;
+}
+
+/* Corner glow */
+.mr-card::after {
+  content: "";
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(
+    circle,
+    rgba(212, 175, 55, 0.12) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.mr-card:hover {
+  background: rgba(255, 255, 255, 0.065);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(212, 175, 55, 0.06);
+  border-color: rgba(212, 175, 55, 0.2);
+}
+
+/* Card header row */
+.mr-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.mr-card-metal {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.mr-card-symbol {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--card-accent);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 3px 8px;
+  border-radius: 1px;
+}
+
+/* Purity badge */
+.mr-card-purity {
+  display: inline-block;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--card-accent);
+  border: 1px solid;
+  border-color: color-mix(in srgb, var(--card-accent) 40%, transparent);
+  padding: 4px 10px;
+  border-radius: 1px;
+  margin-bottom: 20px;
+}
+
+/* Rate */
+.mr-card-rate-wrap {
+  margin-bottom: 22px;
+}
+
+.mr-card-rate {
+  display: block;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--card-accent);
+  line-height: 1;
+  letter-spacing: -0.5px;
+  margin-bottom: 6px;
+}
+
+.mr-card-unit {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.22);
+}
+
+/* Footer */
+.mr-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 14px;
+}
+
+.mr-card-date {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.mr-card-live {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(212, 175, 55, 0.6);
+}
+
+.mr-card-live-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #d4af37;
+  animation: livePulse 2s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.5); }
+  50% { opacity: 0.6; box-shadow: 0 0 0 4px rgba(212, 175, 55, 0); }
+}
+
+/* ── Loading ─────────────────────────────────────────────────────────── */
+.mr-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 100px 0;
+}
+
+.mr-spinner {
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-top-color: #d4af37;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.mr-loading span {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* ── Error ───────────────────────────────────────────────────────────── */
+.mr-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 80px 0;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255, 120, 100, 0.75);
+}
+
+.mr-error-icon {
+  font-size: 18px;
+}
+
+/* ── Bottom Ornament ─────────────────────────────────────────────────── */
+.mr-bottom-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 90px;
+}
+
+.mr-ornament-line.long {
+  display: block;
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(212, 175, 55, 0.3)
+  );
+}
+
+.mr-ornament-line.long:last-child {
+  background: linear-gradient(
+    to left,
+    transparent,
+    rgba(212, 175, 55, 0.3)
+  );
+}
+
+.mr-ornament-diamond.small {
+  color: rgba(212, 175, 55, 0.4);
+  font-size: 8px;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .mr-content {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mr-content {
+    padding-top: 72px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .mr-hero {
+    padding: 56px 0 48px;
+  }
+  .mr-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .mr-card {
+    padding: 22px 18px 18px;
+  }
+  .mr-card-rate {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 540px) {
+  .mr-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .mr-section-title {
+    font-size: 24px;
+  }
+}

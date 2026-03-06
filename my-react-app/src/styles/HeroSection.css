@@ -1,0 +1,316 @@
+/* ── HeroSection — Luxury Cinematic Slider ── */
+
+/* ---------- Container ---------- */
+.hero {
+  position: relative;
+  height: 85vh;
+  margin-top: 90px;
+  overflow: hidden;
+  background: #0d0a07;
+}
+
+/* ---------- Individual Slides ---------- */
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  will-change: clip-path;
+}
+
+.hero-slide img {
+  width: 100%;
+  height: 110%;
+  object-fit: cover;
+  display: block;
+  transform-origin: center top;
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* Dark cinematic vignette per slide */
+.hero-slide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.18) 0%, transparent 38%, rgba(0, 0, 0, 0.62) 100%),
+    linear-gradient(to right, rgba(0, 0, 0, 0.32) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ---------- Text Overlay (both slides, stacked) ---------- */
+.hero-text {
+  position: absolute;
+  bottom: 100px;
+  left: 60px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 500px;
+  pointer-events: none;
+}
+
+.hero-text-line {
+  width: 32px;
+  height: 1px;
+  background: linear-gradient(to right, #d4af37, #f5e6b8);
+  margin-bottom: 2px;
+  transform-origin: left;
+}
+
+.hero-caption {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 10px;
+  letter-spacing: 4.5px;
+  text-transform: uppercase;
+  color: rgba(212, 175, 55, 0.9);
+  display: block;
+}
+
+.hero-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(46px, 6.5vw, 82px);
+  font-weight: 300;
+  color: #fff;
+  line-height: 1.05;
+  letter-spacing: -0.5px;
+  margin: 0;
+}
+
+.hero-sub {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  color: rgba(255, 255, 255, 0.58);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* ---------- Top-right Slide Counter ---------- */
+.hero-counter {
+  position: absolute;
+  top: 36px;
+  right: 60px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.hero-dot {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.38);
+  padding: 4px 2px;
+  transition: color 0.4s ease;
+  position: relative;
+  line-height: 1;
+}
+
+.hero-dot::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 2px;
+  right: 2px;
+  height: 1px;
+  background: #d4af37;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.hero-dot.active {
+  color: #d4af37;
+}
+
+.hero-dot.active::after {
+  transform: scaleX(1);
+}
+
+.hero-dot:hover:not(.active) {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.hero-counter-sep {
+  display: inline-block;
+  width: 18px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ---------- Progress Strip (bottom) ---------- */
+.hero-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  padding: 0 60px;
+  gap: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  pointer-events: none;
+}
+
+.hero-prog-label {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.45);
+  min-width: 20px;
+  transition: color 0.4s ease;
+  pointer-events: none;
+}
+
+.hero-prog-label.current {
+  color: #d4af37;
+}
+
+.hero-prog-track {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  position: relative;
+  overflow: visible;
+}
+
+.hero-prog-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(to right, #8a6a00, #d4af37 60%, #f5e6b8);
+  transform-origin: left;
+  transform: scaleX(0);
+  will-change: transform;
+}
+
+/* Glowing leading edge dot */
+.hero-prog-fill::after {
+  content: "";
+  position: absolute;
+  right: -2px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 5px;
+  background: #f5e6b8;
+  border-radius: 50%;
+  box-shadow: 0 0 8px 3px rgba(212, 175, 55, 0.7);
+}
+
+/* ---------- Scroll Hint (bottom-right) ---------- */
+.hero-scroll {
+  position: absolute;
+  bottom: 72px;
+  right: 60px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.hero-scroll span {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 9px;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.hero-scroll-line {
+  width: 1px;
+  height: 44px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), transparent);
+  animation: heroScrollPulse 1.9s ease-in-out infinite;
+}
+
+@keyframes heroScrollPulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scaleY(0.65);
+    transform-origin: top;
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .hero-text {
+    left: 40px;
+    bottom: 90px;
+  }
+  .hero-counter {
+    right: 40px;
+  }
+  .hero-progress {
+    padding: 0 40px;
+  }
+  .hero-scroll {
+    right: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    height: 80vh;
+    margin-top: 72px;
+  }
+  .hero-text {
+    left: 28px;
+    bottom: 80px;
+    max-width: 320px;
+  }
+  .hero-title {
+    font-size: clamp(36px, 9vw, 54px);
+  }
+  .hero-counter {
+    top: 20px;
+    right: 28px;
+  }
+  .hero-progress {
+    padding: 0 28px;
+    height: 48px;
+  }
+  .hero-scroll {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    height: 75vh;
+    margin-top: 64px;
+  }
+  .hero-text {
+    left: 20px;
+    bottom: 68px;
+    max-width: 260px;
+  }
+  .hero-counter {
+    right: 20px;
+  }
+  .hero-progress {
+    padding: 0 20px;
+  }
+}

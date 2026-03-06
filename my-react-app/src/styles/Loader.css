@@ -1,0 +1,155 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Josefin+Sans:wght@300;400;600&display=swap");
+
+/* ── Overlay ── */
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #0d0a07;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: opacity, transform;
+}
+
+/* ── Canvas (Three.js) ── */
+.loader-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ── Vignette ── */
+.loader-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 35%,
+    rgba(5, 3, 1, 0.75) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── UI layer ── */
+.loader-ui {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  /* push UI to bottom third */
+  margin-top: 52vh;
+}
+
+/* ── Brand name ── */
+.loader-brand {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: clamp(1rem, 3vw, 1.3rem);
+  font-weight: 600;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: #d4af37;
+  min-width: 280px;
+  text-align: center;
+}
+
+/* ── Tagline ── */
+.loader-tagline {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  font-weight: 300;
+  color: rgba(245, 230, 184, 0.6);
+  letter-spacing: 2px;
+  opacity: 0;
+}
+
+/* ── Progress bar ── */
+.loader-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.loader-bar-track {
+  width: clamp(180px, 30vw, 280px);
+  height: 1px;
+  background: rgba(212, 175, 55, 0.2);
+  overflow: hidden;
+  position: relative;
+}
+
+.loader-bar-fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, #8a6a00, #d4af37, #f5e6b8);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.loader-count {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: rgba(212, 175, 55, 0.7);
+  min-width: 36px;
+  text-align: right;
+}
+
+/* ── Decorative corners ── */
+.loader-corner {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  z-index: 2;
+  opacity: 0.4;
+}
+
+.loader-corner--tl {
+  top: 28px;
+  left: 28px;
+  border-top: 1px solid #d4af37;
+  border-left: 1px solid #d4af37;
+}
+.loader-corner--tr {
+  top: 28px;
+  right: 28px;
+  border-top: 1px solid #d4af37;
+  border-right: 1px solid #d4af37;
+}
+.loader-corner--bl {
+  bottom: 28px;
+  left: 28px;
+  border-bottom: 1px solid #d4af37;
+  border-left: 1px solid #d4af37;
+}
+.loader-corner--br {
+  bottom: 28px;
+  right: 28px;
+  border-bottom: 1px solid #d4af37;
+  border-right: 1px solid #d4af37;
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+  .loader-ui {
+    margin-top: 55vh;
+  }
+  .loader-corner {
+    width: 20px;
+    height: 20px;
+    top: 16px;
+  }
+  .loader-corner--bl,
+  .loader-corner--br {
+    bottom: 16px;
+  }
+}

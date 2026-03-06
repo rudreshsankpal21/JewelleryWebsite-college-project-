@@ -1,0 +1,128 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Josefin+Sans:wght@300;400;600&display=swap");
+
+.gold-divider-section {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  background: #0d0a07;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Vignette edges */
+.gold-divider-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 40%,
+    rgba(5, 3, 1, 0.7) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Top fade from previous section */
+.gold-divider-section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, #fff9f5, transparent);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.gold-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Text overlay */
+.gold-divider-text {
+  position: relative;
+  z-index: 4;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s ease;
+}
+
+.gold-divider-text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gold-divider-text .eyebrow {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: rgba(212, 175, 55, 0.7);
+  margin-bottom: 14px;
+  display: block;
+}
+
+.gold-divider-text h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 300;
+  font-style: italic;
+  color: #f5e6b8;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  text-shadow: 0 0 60px rgba(212, 175, 55, 0.3);
+}
+
+.gold-divider-text h2 em {
+  font-style: normal;
+  color: #d4af37;
+}
+
+.gold-divider-text .divider-line {
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(to bottom, #d4af37, transparent);
+  margin: 20px auto 0;
+  opacity: 0.6;
+}
+
+/* Bottom fade to footer */
+.gold-bottom-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to top, #111, transparent);
+  pointer-events: none;
+  z-index: 3;
+}
+
+@media (max-width: 768px) {
+  .gold-divider-section {
+    height: 400px;
+  }
+
+  .gold-divider-text h2 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .gold-divider-section {
+    height: 340px;
+  }
+}
