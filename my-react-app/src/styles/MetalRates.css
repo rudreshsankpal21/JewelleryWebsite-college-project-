@@ -1,3 +1,9 @@
+/* Restore real cursor — smoke trail handles the effect */
+.mr-page,
+.mr-page * {
+  cursor: auto !important;
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Josefin+Sans:wght@300;400;600&display=swap");
 
 /* ── Page Shell ──────────────────────────────────────────────────────── */
@@ -25,21 +31,20 @@
 .mr-overlay {
   position: fixed;
   inset: 0;
-  z-index: 1;
+  /* z-index: 1; */
   pointer-events: none;
-  background:
-    radial-gradient(
-      ellipse 80% 70% at 50% 40%,
-      rgba(6, 4, 2, 0.55) 0%,
-      rgba(4, 2, 0, 0.82) 65%,
-      rgba(3, 1, 0, 0.95) 100%
-    );
+  background: radial-gradient(
+    ellipse 80% 70% at 50% 40%,
+    rgba(6, 4, 2, 0.55) 0%,
+    rgba(4, 2, 0, 0.82) 65%,
+    rgba(3, 1, 0, 0.95) 100%
+  );
 }
 
 /* ── Page Content ────────────────────────────────────────────────────── */
 .mr-content {
   position: relative;
-  z-index: 10;
+  /* z-index: 10; */
   padding-top: 90px; /* nav height */
   max-width: 1240px;
   margin: 0 auto;
@@ -214,7 +219,8 @@
 .mr-card:hover {
   background: rgba(255, 255, 255, 0.065);
   transform: translateY(-6px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
     0 0 30px rgba(212, 175, 55, 0.06);
   border-color: rgba(212, 175, 55, 0.2);
 }
@@ -322,8 +328,15 @@
 }
 
 @keyframes livePulse {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.5); }
-  50% { opacity: 0.6; box-shadow: 0 0 0 4px rgba(212, 175, 55, 0); }
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.5);
+  }
+  50% {
+    opacity: 0.6;
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0);
+  }
 }
 
 /* ── Loading ─────────────────────────────────────────────────────────── */
@@ -345,7 +358,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .mr-loading span {
@@ -387,19 +402,11 @@
   display: block;
   width: 120px;
   height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(212, 175, 55, 0.3)
-  );
+  background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.3));
 }
 
 .mr-ornament-line.long:last-child {
-  background: linear-gradient(
-    to left,
-    transparent,
-    rgba(212, 175, 55, 0.3)
-  );
+  background: linear-gradient(to left, transparent, rgba(212, 175, 55, 0.3));
 }
 
 .mr-ornament-diamond.small {
