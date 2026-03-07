@@ -11,17 +11,16 @@
   position: relative;
 }
 
-/* Animated decorative line (GSAP controlled) */
-.about-line-draw {
+/* Decorative line */
+.container::before {
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 4px;
   height: 100%;
   background: linear-gradient(to bottom, #9a263d, transparent);
-  opacity: 0.5;
-  transform: scaleY(0);
-  transform-origin: top;
+  opacity: 0.4;
 }
 
 .about-left {
@@ -38,7 +37,7 @@
 }
 
 .about-left .about-title h1 {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: "Cormorant Garamond", serif;
   font-size: clamp(2.2rem, 4vw, 3.5rem);
   font-weight: 700;
   color: #9a263d;
@@ -51,7 +50,7 @@
 }
 
 .about-left .about-title h1::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -8px;
   left: 0;
@@ -68,7 +67,7 @@
 }
 
 .about-left .about-description p {
-  font-family: 'Josefin Sans', sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   font-size: clamp(0.88rem, 1.3vw, 1rem);
   font-weight: 400;
   color: #6b1a2b;
@@ -76,7 +75,9 @@
   line-height: 1.85;
   opacity: 0;
   transform: translateY(30px);
-  transition: color 0.2s ease, letter-spacing 0.3s ease;
+  transition:
+    color 0.2s ease,
+    letter-spacing 0.3s ease;
   will-change: contents;
 }
 
@@ -153,4 +154,116 @@
   .about-left .about-description p {
     font-size: 0.9rem;
   }
+}
+
+/* ══ LEARN MORE BUTTON ═══════════════════════════════════════════════ */
+.about-learn-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 2.2rem;
+  padding: 14px 36px;
+  background: transparent;
+  border: 1px solid rgba(154, 38, 61, 0.4);
+  color: #9a263d;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+  opacity: 0;
+  transform-origin: center;
+  transition:
+    border-color 0.35s ease,
+    color 0.35s ease,
+    box-shadow 0.35s ease;
+  will-change: transform;
+}
+
+.about-learn-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #9a263d;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.77, 0, 0.18, 1);
+  z-index: 0;
+}
+
+.about-learn-btn:hover::before {
+  transform: scaleX(1);
+}
+.about-learn-btn:hover {
+  color: #fddcc8;
+  border-color: #9a263d;
+  box-shadow: 0 8px 30px rgba(154, 38, 61, 0.25);
+}
+
+.about-learn-btn__label,
+.about-learn-btn__icon {
+  position: relative;
+  z-index: 1;
+}
+
+.about-learn-btn__icon {
+  font-size: 7px;
+  opacity: 0.7;
+  transition:
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.3s ease;
+}
+
+.about-learn-btn:hover .about-learn-btn__icon {
+  transform: translateX(4px) scale(1.3);
+  opacity: 1;
+}
+
+.about-learn-btn__shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.18) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  z-index: 2;
+}
+
+.about-learn-btn:hover .about-learn-btn__shimmer {
+  animation: btnShimmer 0.6s ease 0.1s forwards;
+}
+
+@keyframes btnShimmer {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(200%);
+  }
+}
+
+.about-learn-btn::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  border-bottom: 1px solid #9a263d;
+  border-right: 1px solid #9a263d;
+  transition:
+    width 0.3s ease,
+    height 0.3s ease;
+  z-index: 3;
+}
+
+.about-learn-btn:hover::after {
+  width: 14px;
+  height: 14px;
 }
