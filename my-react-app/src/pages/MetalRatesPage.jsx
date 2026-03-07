@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import Header from "../Components/Header";
 import ThreeBackground from "../Components/ThreeBackground";
 import "../styles/MetalRates.css";
+import CursorSmoke from "../Components/Cursorsmoke";
 
 const API_URL = "/api/metal-rates";
 
@@ -99,9 +100,7 @@ const MetalCard = ({ metal, index }) => {
       </div>
 
       {/* Purity badge */}
-      {metal.purity && (
-        <div className="mr-card-purity">{metal.purity}</div>
-      )}
+      {metal.purity && <div className="mr-card-purity">{metal.purity}</div>}
 
       {/* Rate */}
       <div className="mr-card-rate-wrap">
@@ -216,12 +215,13 @@ const MetalRatesPage = () => {
   const orderedEntries = metalOrder
     .filter((m) => grouped[m])
     .map((m) => [m, grouped[m]])
-    .concat(
-      Object.entries(grouped).filter(([m]) => !metalOrder.includes(m)),
-    );
+    .concat(Object.entries(grouped).filter(([m]) => !metalOrder.includes(m)));
 
   return (
     <div className="mr-page">
+      {/* Smoke cursor trail */}
+      <CursorSmoke />
+
       {/* 3D Background */}
       <ThreeBackground />
 
@@ -241,11 +241,7 @@ const MetalRatesPage = () => {
             <span className="mr-ornament-line" />
           </div>
 
-          <span
-            ref={captionRef}
-            className="mr-caption"
-            style={{ opacity: 0 }}
-          >
+          <span ref={captionRef} className="mr-caption" style={{ opacity: 0 }}>
             Live Market Data · Updated Daily
           </span>
 
