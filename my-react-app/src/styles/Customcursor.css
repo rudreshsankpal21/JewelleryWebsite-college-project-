@@ -16,11 +16,13 @@
   z-index: 99999;
 
   /* Default state: outlined dark circle */
-  background-color: #ffffff73;
-  border: 3px solid #00000096;
+  background-color: rgba(255, 255, 255, 0.18);
+  border: 2px solid rgba(0, 0, 0, 0.7);
 
   /* Centered on pointer via translate */
   transform: translate(-50%, -50%);
+
+  opacity: 0;
 
   /* Smooth scale / color transitions */
   transition:
@@ -29,8 +31,6 @@
     background 0.25s ease,
     border-color 0.25s ease,
     opacity 0.3s ease;
-
-
 }
 
 .cursor-ball.ready {
@@ -77,7 +77,7 @@
   white-space: nowrap;
   opacity: 0;
   transition: opacity 0.2s ease;
-  mix-blend-mode: normal;
+  /* mix-blend-mode: normal; */
 }
 
 .cursor-ball.on-image .cursor-label {
@@ -86,23 +86,29 @@
 
 /* ── Inverted cursor (dark background sections) ── */
 .cursor-ball.inverted {
-  background-color: rgba(255, 255, 255, 0.75);
-  border-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.12);
+  border: 2px solid rgba(255, 255, 255, 1);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
 }
 
 .cursor-ball.inverted.on-text {
+  width: 20px;
+  height: 20px;
   background: #ffffff;
   border-color: #ffffff;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.3);
 }
 
 .cursor-ball.inverted.on-link {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.8);
+  width: 54px;
+  height: 54px;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.85);
 }
 
 .cursor-ball.inverted.on-image {
   background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.75);
+  border-color: rgba(255, 255, 255, 0.8);
 }
 
 /* Hide on touch devices */
