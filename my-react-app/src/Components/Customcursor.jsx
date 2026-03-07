@@ -1,104 +1,120 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { gsap } from "gsap";
 import "../styles/Customcursor.css";
 
-const TEXT_SELECTORS =
-  "p, h1, h2, h3, h4, h5, h6, span, li, blockquote, label";
+const TEXT_SELECTORS = "p, h1, h2, h3, h4, h5, h6, span, li, blockquote, label";
 const LINK_SELECTORS = "a, button, [role='button'], [data-cursor-hover]";
-const IMAGE_SELECTORS = "[data-cursor-image], .img-wrap, .images, .collection-images .inner";
+const IMAGE_SELECTORS =
+  "[data-cursor-image], .img-wrap, .images, .collection-images .inner";
 
 const CustomCursor = () => {
   const ballRef = useRef(null);
-  const pos = useRef({ x: -200, y: -200 });
-  const raf = useRef(null);
-  const [ready, setReady] = useState(false);
-  const [state, setState] = useState("default"); // default | on-text | on-link | on-image
-  const [label, setLabel] = useState("");
-  const [inverted, setInverted] = useState(false);
 
   useEffect(() => {
-    // ── Smooth position tracking ──
-    const onMove = (e) => {
-      pos.current = { x: e.clientX, y: e.clientY };
-      if (!ready) setReady(true);
-    };
-    window.addEventListener("mousemove", onMove, { passive: true });
+    const ball = ballRef.current;
+    if (!ball) return;
 
+    const pos = { x: -200, y: -200 };
+    let rafId;
+
+    // ── Direct DOM class helpers (zero React re-renders) ──
+    const setClass = (state, inverted, label) => {
+      ball.className = [
+        "cursor-ball",
+        "ready", // always visible once mouse enters
+        state !== "default" ? state : "", // on-text | on-link | on-image
+        inverted ? "inverted" : "",
+      ]
+        .filter(Boolean)
+        .join(" ");
+
+      const labelEl = ball.querySelector(".cursor-label");
+      if (labelEl) labelEl.textContent = label || "";
+    };
+
+    // ── RAF position loop ──
     const tick = () => {
-      if (ballRef.current) {
-        gsap.set(ballRef.current, { x: pos.current.x, y: pos.current.y });
-      }
-      raf.current = requestAnimationFrame(tick);
+      gsap.set(ball, { x: pos.x, y: pos.y });
+      rafId = requestAnimationFrame(tick);
     };
-    raf.current = requestAnimationFrame(tick);
+    rafId = requestAnimationFrame(tick);
 
-    // ── Hover state detection ──
-    const enter = (e) => {
+    // ── Mouse move ──
+    const onMove = (e) => {
+      pos.x = e.clientX;
+      pos.y = e.clientY;
+      gsap.set(ball, { x: e.clientX, y: e.clientY }); // instant snap too
+
+      // Inversion check
+      const el = document.elementFromPoint(e.clientX, e.clientY);
+      const inv = !!el?.closest("[data-cursor-invert]");
+      // Only update if changed to avoid classList churn
+      if (inv !== ball.classList.contains("inverted")) {
+        ball.classList.toggle("inverted", inv);
+      }
+    };
+
+    // ── Page enter: show cursor immediately ──
+    const onEnterPage = (e) => {
+      pos.x = e.clientX;
+      pos.y = e.clientY;
+      gsap.set(ball, { x: e.clientX, y: e.clientY });
+      ball.classList.add("ready");
+    };
+
+    // ── Page leave: hide cursor ──
+    const onLeavePage = () => {
+      ball.classList.remove("ready");
+    };
+
+    // ── Hover detection ──
+    const onEnter = (e) => {
       const el = e.target;
+      const inv = ball.classList.contains("inverted");
 
-      // Dark background section detection
-      setInverted(!!el.closest("[data-cursor-invert]"));
-
-      // Image / product card
       if (el.closest(IMAGE_SELECTORS)) {
-        const cardLabel =
+        const lbl =
           el.closest("[data-cursor-label]")?.dataset.cursorLabel || "";
-        setLabel(cardLabel);
-        setState("on-image");
+        setClass("on-image", inv, lbl);
         return;
       }
-
-      // Links / buttons
       if (el.closest(LINK_SELECTORS)) {
-        setState("on-link");
-        setLabel("");
+        setClass("on-link", inv, "");
         return;
       }
-
-      // Text nodes
       if (el.matches(TEXT_SELECTORS)) {
-        setState("on-text");
-        setLabel("");
+        setClass("on-text", inv, "");
         return;
       }
-
-      setState("default");
-      setLabel("");
+      setClass("default", inv, "");
     };
 
-    const leave = (e) => {
-      setState("default");
-      setLabel("");
-      // Check if moving to a non-inverted element
-      if (e.relatedTarget) {
-        setInverted(!!e.relatedTarget.closest?.("[data-cursor-invert]"));
-      } else {
-        setInverted(false);
-      }
+    const onLeave = () => {
+      setClass("default", ball.classList.contains("inverted"), "");
     };
 
-    document.addEventListener("mouseover", enter, { passive: true });
-    document.addEventListener("mouseout", leave, { passive: true });
+    window.addEventListener("mousemove", onMove, { passive: true });
+    document.documentElement.addEventListener("mouseenter", onEnterPage);
+    document.documentElement.addEventListener("mouseleave", onLeavePage);
+    document.addEventListener("mouseover", onEnter, { passive: true });
+    document.addEventListener("mouseout", onLeave, { passive: true });
 
     return () => {
+      cancelAnimationFrame(rafId);
       window.removeEventListener("mousemove", onMove);
-      document.removeEventListener("mouseover", enter);
-      document.removeEventListener("mouseout", leave);
-      cancelAnimationFrame(raf.current);
+      document.documentElement.removeEventListener("mouseenter", onEnterPage);
+      document.documentElement.removeEventListener("mouseleave", onLeavePage);
+      document.removeEventListener("mouseover", onEnter);
+      document.removeEventListener("mouseout", onLeave);
     };
-  }, [ready]);
+  }, []); // ← empty deps: runs ONCE, never tears down
 
   return createPortal(
-    <div
-      ref={ballRef}
-      className={`cursor-ball ${ready ? "ready" : ""} ${
-        state !== "default" ? state : ""
-      } ${inverted ? "inverted" : ""}`}
-    >
-      {label && <span className="cursor-label">{label}</span>}
+    <div ref={ballRef} className="cursor-ball">
+      <span className="cursor-label" />
     </div>,
-    document.body
+    document.body,
   );
 };
 
