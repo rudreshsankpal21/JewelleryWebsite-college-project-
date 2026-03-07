@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 const SLIDES = [
   {
     image: heroBanner2,
-    num: "02",
+    num: "01",
     caption: "Signature Series · 2026",
     title: "Crafted Forever",
     sub: "Every detail, a masterpiece",
