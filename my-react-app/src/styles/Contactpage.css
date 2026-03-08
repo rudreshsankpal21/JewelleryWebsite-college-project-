@@ -202,7 +202,6 @@ body:has(.cp-page) {
   outline: none;
   transition: border-color 0.3s ease;
   letter-spacing: 0.3px;
-  -webkit-appearance: none;
 }
 .cp-input::placeholder {
   color: rgba(255, 255, 255, 0.18);
