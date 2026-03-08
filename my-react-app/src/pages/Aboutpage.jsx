@@ -314,7 +314,7 @@ const timeline = [
   {
     year: "2017",
     title: "5500 sq.ft. Flagship",
-    desc: "The grand Chandan Nagar showroom opens — a destination for bridal, contemporary, and collector pieces.",
+    desc: "The grand Mangalvar Peth showroom opens — a destination for bridal, contemporary, and collector pieces.",
     align: "right",
   },
   {
@@ -478,7 +478,7 @@ export default function AboutPage() {
                 timeless design.
               </p>
               <p>
-                Today, our 5500 sq.ft. flagship showroom in Chandan Nagar stands
+                Today, our 5500 sq.ft. flagship showroom in Mangalvar Peth stands
                 as a sanctuary for those who understand that jewellery is not
                 merely ornament — it is memory, it is legacy, it is love made
                 tangible.
@@ -539,7 +539,7 @@ export default function AboutPage() {
             <span className="ap-line" />
           </div>
           <h2>Visit Our Showroom</h2>
-          <p>Chandan Nagar, East Pune · Open 10 AM – 8:30 PM · Mon–Sun</p>
+          <p>Mangalvar Peth, Solapur · Open 10 AM – 8:30 PM · Mon–Sun</p>
           <div className="ap-cta-actions">
             <Link to="/" className="ap-btn ap-btn-primary">
               Explore Collections

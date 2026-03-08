@@ -1206,7 +1206,7 @@ export default function ProductsPage() {
           </div>
           <h2 className="pp-end-title">Visit Our Showroom</h2>
           <p className="pp-end-sub">
-            Chandan Nagar, East Pune · 5500 sq.ft of pure gold
+            Mangalvar Peth , Solapur · 5500 sq.ft of pure gold
           </p>
           <div className="pp-end-btns">
             <Link to="/" className="pp-ebtn pp-ebtn--gold">
