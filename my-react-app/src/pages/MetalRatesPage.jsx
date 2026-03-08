@@ -5,7 +5,7 @@ import ThreeBackground from "../Components/ThreeBackground";
 import "../styles/MetalRates.css";
 import CursorSmoke from "../Components/Cursorsmoke";
 
-const API_URL = "/api/metal-rates";
+const API_URL = "https://demos.zarpsoftware.in/goldapp/mobile/rates";
 
 // ── Helpers ────────────────────────────────────────────────────────────
 const formatINR = (amount) =>
