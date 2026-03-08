@@ -5,7 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link } from "react-router-dom";
 import Header from "../Components/Header";
 import CursorSmoke from "../Components/Cursorsmoke";
-import "../styles/ProductsPage.css";
+import "../styles/Productspage.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
