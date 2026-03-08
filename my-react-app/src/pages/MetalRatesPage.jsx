@@ -171,10 +171,7 @@ const MetalRatesPage = () => {
 
   // Fetch
   useEffect(() => {
-    fetch("https://demos.zarpsoftware.in/goldapp/mobile/metal-rates", {
-      method: "GET",
-      mode: "cors",
-    })
+    fetch("/.netlify/functions/metal-rates")
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
         return res.json();
