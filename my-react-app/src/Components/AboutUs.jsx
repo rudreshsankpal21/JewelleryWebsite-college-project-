@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useNavigate } from "react-router-dom";
 import "../styles/About.css";
+import Banner from '../assets/about-right.png'
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -138,7 +139,7 @@ const AboutUs = () => {
       </div>
 
       <div className="about-right" ref={rightRef}>
-        <img src="./src/assets/about-right.png" alt="About Kabane Jewellers" />
+        <img src={Banner} alt="About Kabane Jewellers" />
       </div>
     </div>
   );

@@ -3,14 +3,17 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "../styles/Collection.css";
 
+import img1 from "../assets/collections/img1.png";
+import img2 from "../assets/collections/img2.png";
+import img3 from "../assets/collections/img3.png";
+import img4 from "../assets/collections/img4.png";
+
+import titleLeft from "../assets/products/product-title-left.png";
+import titleRight from "../assets/products/product-title-right.png";
+
 gsap.registerPlugin(ScrollTrigger);
 
-const collections = [
-  "./src/assets/collections/img1.png",
-  "./src/assets/collections/img2.png",
-  "./src/assets/collections/img3.png",
-  "./src/assets/collections/img4.png",
-];
+const collections = [img1, img2, img3, img4];
 
 const Collection = () => {
   const containerRef = useRef(null);
@@ -19,7 +22,6 @@ const Collection = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // ── Header reveal ──
       gsap.fromTo(
         headerRef.current,
         { opacity: 0, y: 40 },
@@ -36,7 +38,6 @@ const Collection = () => {
         },
       );
 
-      // ── Cards: alternating slide from left / right ──
       cardsRef.current.forEach((card, i) => {
         if (!card) return;
         const fromX = i % 2 === 0 ? -70 : 70;
@@ -58,7 +59,6 @@ const Collection = () => {
           },
         );
 
-        // ── Inner image parallax ──
         const inner = card.querySelector(".inner");
         if (inner) {
           gsap.to(inner, {
@@ -82,10 +82,11 @@ const Collection = () => {
     <div ref={containerRef}>
       <div className="collection-container">
         <div className="collection-header" ref={headerRef}>
-          <img src="./src/assets/products/product-title-left.png" alt="" />
+          <img src={titleLeft} alt="" />
           <h1>Our Collections</h1>
-          <img src="./src/assets/products/product-title-right.png" alt="" />
+          <img src={titleRight} alt="" />
         </div>
+
         <div className="collection-img-container">
           {collections.map((src, i) => (
             <div

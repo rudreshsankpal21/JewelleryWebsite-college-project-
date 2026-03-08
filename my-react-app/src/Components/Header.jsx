@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import { gsap } from "gsap";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Header.css";
+import Logo from '../assets/logo.png'
 
 // ── Scramble Engine ───────────────────────────────────────────────────
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%";
@@ -250,7 +251,7 @@ const Header = ({ dark = false }) => {
         {/* ── Logo ── */}
         <div className="nav-left" ref={logoRef}>
           <div className="logo-wrap" onClick={() => navigate("/")}>
-            <img src="../src/assets/logo.png" alt="Logo" />
+            <img src={Logo} alt="Logo" />
             <div className="logo-shimmer" />
           </div>
         </div>

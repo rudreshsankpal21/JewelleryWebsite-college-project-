@@ -3,16 +3,25 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useNavigate } from "react-router-dom";
 import "../styles/Products.css";
+import prod1 from "../assets/products/img1.png";
+import prod2 from "../assets/products/img2.png";
+import prod3 from "../assets/products/img3.png";
+import prod4 from "../assets/products/img4.png";
+import prod5 from "../assets/products/img5.png";
+import prod6 from "../assets/products/img6.png";
+
+import titleLeft from "../assets/products/product-title-left.png";
+import titleRight from "../assets/products/product-title-right.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const products = [
-  { src: "./src/assets/products/img1.png", label: "Earrings" },
-  { src: "./src/assets/products/img2.png", label: "Rings" },
-  { src: "./src/assets/products/img3.png", label: "Necklaces" },
-  { src: "./src/assets/products/img4.png", label: "Mangalsutra" },
-  { src: "./src/assets/products/img5.png", label: "Bangles" },
-  { src: "./src/assets/products/img6.png", label: "Pendants" },
+  { src: prod1, label: "Earrings" },
+  { src: prod2, label: "Necklaces" },
+  { src: prod3, label: "Rings" },
+  { src: prod4, label: "Mangalsutra" },
+  { src: prod5, label: "Bangles" },
+  { src: prod6, label: "Pendants" },
 ];
 
 const Products = () => {
@@ -123,9 +132,9 @@ const Products = () => {
       <div ref={containerRef}>
         <div className="product-container">
           <div className="product-header">
-            <img src="./src/assets/products/product-title-left.png" alt="" />
+            <img src={titleLeft} alt="" />
             <h1>Our Products</h1>
-            <img src="./src/assets/products/product-title-right.png" alt="" />
+            <img src={titleRight} alt="" />
           </div>
 
           <div
