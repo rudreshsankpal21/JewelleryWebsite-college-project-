@@ -5,8 +5,6 @@ import ThreeBackground from "../Components/ThreeBackground";
 import "../styles/MetalRates.css";
 import CursorSmoke from "../Components/Cursorsmoke";
 
-const API_URL = "https://demos.zarpsoftware.in/goldapp/mobile/rates";
-
 // ── Helpers ────────────────────────────────────────────────────────────
 const formatINR = (amount) =>
   new Intl.NumberFormat("en-IN", {
@@ -173,7 +171,7 @@ const MetalRatesPage = () => {
 
   // Fetch
   useEffect(() => {
-    fetch(API_URL)
+    fetch("https://demos.zarpsoftware.in/goldapp/mobile/metal-rates")
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
         return res.json();
