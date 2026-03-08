@@ -1,4 +1,42 @@
-/* Cursor styles live in CustomCursor.css — imported globally in App.jsx */
+/* Custom Cursor */
+.custom-cursor {
+  position: fixed;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(154, 38, 61, 0.15);
+  border: 1.5px solid rgba(154, 38, 61, 0.5);
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%) scale(0);
+  transition:
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  backdrop-filter: blur(2px);
+  z-index: 9999;
+}
+
+.custom-cursor.visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.custom-cursor span {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #9a263d;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.4;
+  white-space: nowrap;
+}
 
 /* Products Section */
 .product-container {
@@ -68,6 +106,10 @@
   inset: 0;
   background: rgba(154, 38, 61, 0);
   transition: background 0.4s ease;
+}
+
+.images:hover .img-wrap::after {
+  background: rgba(154, 38, 61, 0.08);
 }
 
 .images img {
@@ -191,4 +233,120 @@
     height: 260px;
     max-width: 100%;
   }
+}
+
+/* ══ VIEW MORE BUTTON ════════════════════════════════════════════════ */
+.product-view-more-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 48px 0 20px;
+}
+
+.product-view-more-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 42px;
+  background: transparent;
+  border: 1px solid rgba(154, 38, 61, 0.45);
+  color: #9a263d;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+  opacity: 0;
+  will-change: transform;
+  transition:
+    border-color 0.35s ease,
+    color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+/* Fill sweep */
+.product-view-more-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #9a263d;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.77, 0, 0.18, 1);
+  z-index: 0;
+}
+.product-view-more-btn:hover::before {
+  transform: scaleX(1);
+}
+.product-view-more-btn:hover {
+  color: #fddcc8;
+  border-color: #9a263d;
+  box-shadow: 0 8px 40px rgba(154, 38, 61, 0.22);
+}
+
+.pvmb-label,
+.pvmb-icon {
+  position: relative;
+  z-index: 1;
+}
+
+.pvmb-icon {
+  font-size: 7px;
+  opacity: 0.6;
+  transition:
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.3s ease;
+}
+.product-view-more-btn:hover .pvmb-icon {
+  transform: translateX(5px) scale(1.4);
+  opacity: 1;
+}
+
+/* Shimmer */
+.pvmb-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  z-index: 2;
+  pointer-events: none;
+}
+.product-view-more-btn:hover .pvmb-shimmer {
+  animation: pvmbShimmer 0.6s ease 0.05s forwards;
+}
+@keyframes pvmbShimmer {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(200%);
+  }
+}
+
+/* Corner accent */
+.product-view-more-btn::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  border-bottom: 1px solid #9a263d;
+  border-right: 1px solid #9a263d;
+  transition:
+    width 0.3s ease,
+    height 0.3s ease;
+  z-index: 3;
+}
+.product-view-more-btn:hover::after {
+  width: 14px;
+  height: 14px;
 }
