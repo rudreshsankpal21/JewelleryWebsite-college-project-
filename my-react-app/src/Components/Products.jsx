@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useNavigate } from "react-router-dom";
 import "../styles/Products.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -16,69 +17,42 @@ const products = [
 
 const Products = () => {
   const containerRef = useRef(null);
-  const headerRef = useRef(null);
-  const leftDecoRef = useRef(null);
-  const rightDecoRef = useRef(null);
-  const titleRef = useRef(null);
   const imagesRef = useRef([]);
+  const cursorRef = useRef(null);
+  const btnRef = useRef(null);
+  const cursorPos = useRef({ x: 0, y: 0 });
+  const rafRef = useRef(null);
+  const [cursorVisible, setCursorVisible] = useState(false);
+  const [hoveredLabel, setHoveredLabel] = useState("");
+  const navigate = useNavigate();
 
+  // Smooth cursor follow
+  useEffect(() => {
+    const onMove = (e) => {
+      cursorPos.current = { x: e.clientX, y: e.clientY };
+    };
+    window.addEventListener("mousemove", onMove);
+    const animate = () => {
+      if (cursorRef.current)
+        gsap.set(cursorRef.current, {
+          x: cursorPos.current.x,
+          y: cursorPos.current.y,
+        });
+      rafRef.current = requestAnimationFrame(animate);
+    };
+    rafRef.current = requestAnimationFrame(animate);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
+  // Scroll-triggered card entrance
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // ── Header decorative images slide in from sides ──
-      gsap.fromTo(
-        leftDecoRef.current,
-        { opacity: 0, x: -50 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.9,
-          ease: "expo.out",
-          scrollTrigger: {
-            trigger: headerRef.current,
-            start: "top 85%",
-            toggleActions: "play none none none",
-          },
-        },
-      );
-
-      gsap.fromTo(
-        rightDecoRef.current,
-        { opacity: 0, x: 50 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.9,
-          ease: "expo.out",
-          scrollTrigger: {
-            trigger: headerRef.current,
-            start: "top 85%",
-            toggleActions: "play none none none",
-          },
-        },
-      );
-
-      // ── Title clip-path reveal ──
-      gsap.fromTo(
-        titleRef.current,
-        { opacity: 0, y: 30, clipPath: "inset(100% 0% 0% 0%)" },
-        {
-          opacity: 1,
-          y: 0,
-          clipPath: "inset(0% 0% 0% 0%)",
-          duration: 0.9,
-          ease: "expo.out",
-          scrollTrigger: {
-            trigger: headerRef.current,
-            start: "top 82%",
-            toggleActions: "play none none none",
-          },
-        },
-      );
-
-      // ── Product cards stagger with scale ──
       gsap.fromTo(
         imagesRef.current,
-        { opacity: 0, y: 60, scale: 0.94 },
+        { opacity: 0, y: 60, scale: 0.96 },
         {
           opacity: 1,
           y: 0,
@@ -93,63 +67,108 @@ const Products = () => {
           },
         },
       );
-
-      // ── Subtle parallax on each product image ──
-      imagesRef.current.forEach((card) => {
-        if (!card) return;
-        const img = card.querySelector("img");
-        if (!img) return;
-        gsap.to(img, {
-          y: -30,
-          ease: "none",
+      gsap.fromTo(
+        btnRef.current,
+        { opacity: 0, y: 30, scale: 0.95 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.8,
+          ease: "back.out(1.6)",
+          delay: 0.7,
           scrollTrigger: {
-            trigger: card,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
+            trigger: containerRef.current,
+            start: "top 70%",
+            toggleActions: "play none none none",
           },
-        });
-      });
+        },
+      );
     }, containerRef);
-
     return () => ctx.revert();
   }, []);
 
-  return (
-    <div ref={containerRef}>
-      <div className="product-container">
-        <div className="product-header" ref={headerRef}>
-          <img
-            ref={leftDecoRef}
-            src="./src/assets/products/product-title-left.png"
-            alt=""
-          />
-          <h1 ref={titleRef}>Our Products</h1>
-          <img
-            ref={rightDecoRef}
-            src="./src/assets/products/product-title-right.png"
-            alt=""
-          />
-        </div>
+  // Magnetic button
+  const handleBtnMove = useCallback((e) => {
+    const rect = btnRef.current.getBoundingClientRect();
+    const dx = (e.clientX - rect.left - rect.width / 2) * 0.22;
+    const dy = (e.clientY - rect.top - rect.height / 2) * 0.22;
+    gsap.to(btnRef.current, {
+      x: dx,
+      y: dy,
+      duration: 0.3,
+      ease: "power2.out",
+    });
+  }, []);
 
-        <div className="product-img-container">
-          {products.map(({ src, label }, i) => (
-            <div
-              key={label}
-              className="images"
-              ref={(el) => (imagesRef.current[i] = el)}
-              data-cursor-image
-              data-cursor-label={label}
-            >
-              <div className="img-wrap">
-                <img src={src} alt={label} />
+  const handleBtnLeave = useCallback(() => {
+    gsap.to(btnRef.current, {
+      x: 0,
+      y: 0,
+      duration: 0.6,
+      ease: "elastic.out(1,0.5)",
+    });
+  }, []);
+
+  return (
+    <>
+      {/* Custom Cursor */}
+      <div
+        ref={cursorRef}
+        className={`custom-cursor ${cursorVisible ? "visible" : ""}`}
+      >
+        <span>{hoveredLabel || "View"}</span>
+      </div>
+
+      <div ref={containerRef}>
+        <div className="product-container">
+          <div className="product-header">
+            <img src="./src/assets/products/product-title-left.png" alt="" />
+            <h1>Our Products</h1>
+            <img src="./src/assets/products/product-title-right.png" alt="" />
+          </div>
+
+          <div
+            className="product-img-container"
+            onMouseEnter={() => setCursorVisible(true)}
+            onMouseLeave={() => {
+              setCursorVisible(false);
+              setHoveredLabel("");
+            }}
+          >
+            {products.map(({ src, label }, i) => (
+              <div
+                key={label}
+                className="images"
+                ref={(el) => (imagesRef.current[i] = el)}
+                onMouseEnter={() => setHoveredLabel(label)}
+                onMouseLeave={() => setHoveredLabel("")}
+              >
+                <div className="img-wrap">
+                  <img src={src} alt={label} />
+                </div>
+                <h3>{label}</h3>
               </div>
-              <h3>{label}</h3>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          {/* ── View More button ── */}
+          <div className="product-view-more-wrap">
+            <button
+              ref={btnRef}
+              className="product-view-more-btn"
+              onClick={() => navigate("/products")}
+              onMouseMove={handleBtnMove}
+              onMouseLeave={handleBtnLeave}
+            >
+              <span className="pvmb-label">View All Collections</span>
+              <span className="pvmb-icon">◆</span>
+              <span className="pvmb-shimmer" />
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
