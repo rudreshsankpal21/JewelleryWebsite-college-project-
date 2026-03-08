@@ -114,9 +114,9 @@ function NavItem({ label, to, innerRef, onClick, onHoverChange }) {
 const navItems = [
   { label: "Home", to: "/" },
   { label: "About Us", to: "/about" },
-  { label: "Products" },
+  { label: "Products", to: "/products" },
   { label: "Metal Rates", to: "/metal-rates" },
-  { label: "Contact Us" },
+  { label: "CONTACT US", to: "/contact" }
 ];
 
 // ── Header ────────────────────────────────────────────────────────────
