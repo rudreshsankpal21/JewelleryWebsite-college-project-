@@ -812,15 +812,25 @@ function TiltCard({ product }) {
   }, []);
 
   return (
-    <div
-      ref={ref}
+    <Link
+      to={`/product/${product.id}`}
+      state={{ product }}
       className="tc-card"
+      ref={ref}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
     >
       {product.tag && <span className="tc-tag">{product.tag}</span>}
       <div className="tc-img-wrap">
-        <img src={product.img} alt={product.name} loading="lazy" />
+        <img
+          src={product.img}
+          alt={product.name}
+          loading="lazy"
+          onError={(e) => {
+            e.target.src =
+              "https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=600&h=750&q=80";
+          }}
+        />
         <div className="tc-shine" />
         <div className="tc-reveal">
           <span>
@@ -833,7 +843,7 @@ function TiltCard({ product }) {
         <h3>{product.name}</h3>
         <span className="tc-price">{product.price}</span>
       </div>
-    </div>
+    </Link>
   );
 }
 
